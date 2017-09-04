@@ -1,0 +1,46 @@
+aufullpath
+-------------
+
+A tool to replace relative paths with absolute paths in Linux audit system log data.
+
+It's useful for `aureport -f`
+
+
+Requirement
+------------
+
+* AWK
+* Raw audit log data as inout, with "type=CWD" records
+
+
+Usage
+------------
+
+Without aufullpath:
+
+sh$ ausearch -r | aureport -f
+
+File Report
+===============================================
+# date time file syscall success exe auid event
+===============================================
+1. 08/23/2017 17:17:13 lhdhome 89 yes /bin/ls 1000 166
+2. 08/23/2017 17:17:13 . 2 yes /bin/ls 1000 165
+3. 08/23/2017 17:17:15 /tmp 2 yes /bin/ls 1000 167
+4. 08/23/2017 17:18:12 /etc/login.defs 2 yes /usr/bin/sudo 1000 215
+...
+
+
+With aufullpath:
+
+sh$ ausearch -r | aufullpath | aureport -f
+
+File Report
+===============================================
+# date time file syscall success exe auid event
+===============================================
+1. 08/23/2017 17:17:13 /home/lhd/lhdhome 89 yes /bin/ls 1000 166
+2. 08/23/2017 17:17:13 /home/lhd/. 2 yes /bin/ls 1000 165
+3. 08/23/2017 17:17:15 /tmp 2 yes /bin/ls 1000 167
+4. 08/23/2017 17:18:12 /etc/login.defs 2 yes /usr/bin/sudo 1000 215
+...

@@ -1,0 +1,9 @@
+#!/bin/sh
+
+AWK=`which awk`
+
+$AWK 'BEGIN { LASTCWD=""; LASTTSID="" }; \
+ { if ($1=="type=CWD") {split($3, cwd, "\""); LASTCWD=cwd[2]; LASTTSID=$2 } \
+   else if ($1=="type=PATH" && $2==LASTTSID && substr($4, 7, 1)!="/") {sub(/name=\"/, "name=\""LASTCWD"/")} \
+   print $0
+ }'
