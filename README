@@ -10,7 +10,7 @@ Requirement
 ------------
 
 * AWK
-* Raw audit log data as inout, with "type=CWD" records
+* Raw audit log data as input, with "type=CWD" records
 
 
 Usage
